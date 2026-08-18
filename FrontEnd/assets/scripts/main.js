@@ -1,5 +1,9 @@
-// URL de l'API
+// URLs de l'API
 const worksUrl = 'http://localhost:5678/api/works';
+const categoriesUrl = 'http://localhost:5678/api/categories';
+
+// On garde les travaux en mémoire pour pouvoir les filtrer sans re-fetch
+let allWorks = [];
 
 // Récupération des travaux depuis l'API
 async function getWorks() {
@@ -7,9 +11,22 @@ async function getWorks() {
     const response = await fetch(worksUrl);
     const works = await response.json();
     console.log(`${works.length} travaux récupérés avec succès`);
+    allWorks = works;
     displayGallery(works);
   } catch (error) {
     console.error('Erreur lors de la récupération des travaux :', error);
+  }
+}
+
+// Récupération des catégories depuis l'API
+async function getCategories() {
+  try {
+    const response = await fetch(categoriesUrl);
+    const categories = await response.json();
+    console.log(`${categories.length} catégories récupérées avec succès`);
+    displayFilters(categories);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des catégories :', error);
   }
 }
 
@@ -34,5 +51,44 @@ function displayGallery(works) {
   });
 }
 
+// Génération dynamique des boutons de filtre
+function displayFilters(categories) {
+  const filters = document.querySelector('#filters');
+  filters.innerHTML = '';
+
+  // Bouton "Tous" (affiché par défaut)
+  const allButton = document.createElement('button');
+  allButton.textContent = 'Tous';
+  allButton.classList.add('filter-btn', 'active');
+  allButton.addEventListener('click', () => {
+    setActiveButton(allButton);
+    displayGallery(allWorks);
+  });
+  filters.appendChild(allButton);
+
+  // Un bouton par catégorie
+  categories.forEach(category => {
+    const button = document.createElement('button');
+    button.textContent = category.name;
+    button.classList.add('filter-btn');
+
+    button.addEventListener('click', () => {
+      setActiveButton(button);
+      const filteredWorks = allWorks.filter(work => work.categoryId === category.id);
+      displayGallery(filteredWorks);
+    });
+
+    filters.appendChild(button);
+  });
+}
+
+// Gère la classe "active" sur le bouton cliqué
+function setActiveButton(clickedButton) {
+  const buttons = document.querySelectorAll('.filter-btn');
+  buttons.forEach(button => button.classList.remove('active'));
+  clickedButton.classList.add('active');
+}
+
 // Lancement au chargement de la page
 getWorks();
+getCategories();
