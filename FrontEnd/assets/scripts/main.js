@@ -75,6 +75,7 @@ function displayFilters(categories) {
     button.addEventListener('click', () => {
       setActiveButton(button);
       const filteredWorks = allWorks.filter(work => work.categoryId === category.id);
+      console.log(`Filtre "${category.name}" appliqué : ${filteredWorks.length} travaux affichés`);
       displayGallery(filteredWorks);
     });
 
