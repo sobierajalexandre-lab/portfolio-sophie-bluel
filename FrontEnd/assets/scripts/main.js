@@ -93,3 +93,24 @@ function setActiveButton(clickedButton) {
 // Lancement au chargement de la page
 getWorks();
 getCategories();
+
+// Vérifie si un utilisateur est connecté et adapte l'affichage
+function checkLoginStatus() {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    document.querySelector('#edit-banner').style.display = 'flex';
+    document.querySelector('#edit-btn').style.display = 'inline-block';
+    document.querySelector('#filters').style.display = 'none';
+
+    const loginLink = document.querySelector('#login-link');
+    loginLink.textContent = 'logout';
+    loginLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      localStorage.removeItem('token');
+      window.location.href = 'index.html';
+    });
+  }
+}
+
+checkLoginStatus();
