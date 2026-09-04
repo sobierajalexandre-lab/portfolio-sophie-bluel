@@ -25,6 +25,7 @@ async function getCategories() {
     const categories = await response.json();
     console.log(`${categories.length} catégories récupérées avec succès`);
     displayFilters(categories);
+    fillCategorySelect(categories);
   } catch (error) {
     console.error('Erreur lors de la récupération des catégories :', error);
   }

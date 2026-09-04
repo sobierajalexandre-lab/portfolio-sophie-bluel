@@ -8,10 +8,12 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
 	<div id="edit-banner" class="edit-banner" style="display:none;">
+	<i class="fa-regular fa-pen-to-square"></i>
     <p>Mode édition</p>
 	</div>
 <header>
@@ -38,7 +40,7 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets <button id="edit-btn" style="display:none;">modifier</button></h2>
+		<h2>Mes Projets <button id="edit-btn" style="display:none;"><i class="fa-regular fa-pen-to-square"></i> modifier</button></h2>
 		<div class="filters" id="filters">
 		</div>
 		<div class="gallery" id="gallery">
@@ -66,6 +68,42 @@
 		</ul>
 	</nav>
 </footer>
+<div id="modal-overlay" class="modal-overlay" style="display:none;">
+    <div class="modal">
+        <span id="modal-close" class="modal-close">&times;</span>
+
+        <div id="modal-gallery-view" class="modal-view">
+            <h3>Galerie photo</h3>
+            <div id="modal-gallery" class="modal-gallery"></div>
+    		<button id="add-photo-btn" class="btn-submit">Ajouter une photo</button>
+        </div>
+<div id="modal-form-view" class="modal-view" style="display:none;">
+    <span id="modal-back" class="modal-back">&#8592;</span>
+    <h3>Ajout photo</h3>
+    <form id="add-photo-form">
+        <div class="upload-zone" id="upload-zone">
+            <i class="fa-regular fa-image upload-icon"></i>
+            <label for="photo-file" class="upload-label">+ Ajouter photo</label>
+            <input type="file" id="photo-file" name="image" accept="image/png, image/jpeg" hidden>
+            <p class="upload-info">jpg, png : 4mo max</p>
+            <img id="preview-image" style="display:none;">
+        </div>
+
+        <label for="photo-title">Titre</label>
+        <input type="text" id="photo-title" name="title" required>
+
+        <label for="photo-category">Catégorie</label>
+        <select id="photo-category" name="category" required>
+            <option value=""></option>
+        </select>
+
+        <button type="submit" class="btn-submit" id="submit-photo-btn">Valider</button>
+    </form>
+</div>
+        
+    </div>
+</div>
 <script src="./assets/scripts/main.js"></script>
+<script src="./assets/scripts/modal.js"></script>
 </body>
 </html>
