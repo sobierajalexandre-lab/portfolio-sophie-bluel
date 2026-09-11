@@ -130,6 +130,25 @@ photoFileInput.addEventListener('change', () => {
 
 const addPhotoForm = document.querySelector('#add-photo-form');
 
+const submitPhotoBtn = document.querySelector('#submit-photo-btn');
+const photoTitleInput = document.querySelector('#photo-title');
+
+function checkFormValidity() {
+  const hasTitle = photoTitleInput.value.trim() !== '';
+  const hasCategory = categorySelect.value !== '';
+  const hasImage = photoFileInput.files.length > 0;
+
+  if (hasTitle && hasCategory && hasImage) {
+    submitPhotoBtn.disabled = false;
+  } else {
+    submitPhotoBtn.disabled = true;
+  }
+}
+
+photoTitleInput.addEventListener('input', checkFormValidity);
+categorySelect.addEventListener('change', checkFormValidity);
+photoFileInput.addEventListener('change', checkFormValidity);
+
 addPhotoForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
@@ -156,7 +175,26 @@ addPhotoForm.addEventListener('submit', async (event) => {
       throw new Error('Erreur lors de l\'ajout de la photo');
     }
 
+    const newWork = await response.json();
     console.log('Photo ajoutée avec succès');
+
+    // On ajoute le nouveau travail à la mémoire globale
+    allWorks.push(newWork);
+
+    // On met à jour les deux galeries
+    displayGallery(allWorks);
+    displayModalGallery(allWorks);
+
+    // On réinitialise le formulaire pour un prochain ajout
+    addPhotoForm.reset();
+    previewImage.style.display = 'none';
+    uploadIcon.style.display = 'block';
+    uploadLabel.style.display = 'block';
+    uploadInfo.style.display = 'block';
+    submitPhotoBtn.disabled = true;
+
+    // On ferme la modale
+    modalOverlay.style.display = 'none';
 
   } catch (error) {
     console.error(error);

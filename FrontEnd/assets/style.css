@@ -267,6 +267,11 @@ footer nav ul {
   cursor: pointer;
 }
 
+.btn-submit:disabled {
+  background-color: #C9C9C9;
+  cursor: not-allowed;
+}
+
 .forgot-password {
   margin-top: 20px;
   text-align: center;
@@ -351,7 +356,9 @@ nav a {
   position: absolute;
   top: 20px;
   left: 20px;
-  font-size: 20px;
+  font-size: 26px;
+  font-weight: 900;
+  color: black;
   cursor: pointer;
 }
 
@@ -437,6 +444,12 @@ nav a {
   font-size: 14px;
 }
 
+#add-photo-form label.upload-label {
+  width: auto;
+  text-align: center;
+  display: inline-block;
+}
+
 .upload-info {
   font-size: 12px;
   color: #444;
@@ -456,4 +469,33 @@ nav a {
 .form-error {
   color: red;
   font-size: 13px;
+}
+
+#add-photo-form input[type="text"] {
+  height: 50px;
+  border: none;
+  padding: 0 10px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.15);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+}
+
+#add-photo-form input[type="text"]:focus,
+#add-photo-form select:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,0,0,0.15);
+}
+
+#add-photo-form label {
+  text-align: left;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.modal-divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #B3B3B3;
+  margin: 40px 0 20px 0;
 }
